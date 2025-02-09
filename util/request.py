@@ -4,6 +4,8 @@ class Request:
         # TODO: parse the bytes of the request and populate the following instance variables
 
         # this is something
+        # this is something
+        # this is something
 
         self.body = b""
         self.method = ""
