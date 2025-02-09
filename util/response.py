@@ -3,9 +3,8 @@ import json
 
 class Response:
 
-    # this is something
-    # this is something
-    # this is something
+    # example response from Week 2.1 Lecture Slides
+    # HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 5\r\n\r\nhello
 
     def __init__(self):
         pass
