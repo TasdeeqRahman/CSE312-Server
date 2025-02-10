@@ -13,6 +13,15 @@ class Request:
         #  \r\n
         #  {"content":"asdf"}”
 
+        # split on the first \r\n\r\n => first part is headers, second is body
+        # split headers on \r\n (surely \r\n cannot be used as a value to a header ?)
+        # split the first line of the headers by the first 2 whitespaces
+            # the three resulting parts is the method, path, and http_version
+        # every subsequent line in headers:
+            # retrieve content from after the :, left trim the whitespace, if it exists, and
+            # populate the dictionary
+            # if the header before the : is "Cookie", have to create a dictionary?
+
         self.body = b""
         self.method = ""
         self.path = ""
