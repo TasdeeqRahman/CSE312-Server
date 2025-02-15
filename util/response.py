@@ -2,6 +2,16 @@ import json
 
 
 class Response:
+
+    # example response from Week 2.1 Lecture Slides
+    # HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 5\r\n\r\nhello
+
+    # response = headers + \r\n + body
+    # headers = first line + rest of the lines
+    # first line = http_version + status code + status message (with spaces)
+    # rest of the lines:
+        # go through every header + ": " + content for that header (don't know how to handle directives)
+
     def __init__(self):
         pass
 
