@@ -33,6 +33,7 @@ class Response:
 
     def headers(self, headers : dict[str, str]) -> Response:
         # adds/changes key-value pairs from dict as headers of response
+        # handles all headers EXCEPT Set-Cookie
         self.headers.update(headers)
         return self
 
@@ -40,6 +41,21 @@ class Response:
         # adds key-value pairs from dict as cookies of response
         # multiple calls has to maintain previous cookies
         self.cookies.update(cookies)
+
+        # Week 2.3 Slides
+        # responses can possibly involve multiple Set-Cookie headers
+        # example:
+        # Set-Cookie: id=X6kAwpgW29M
+        # Set-Cookie: visits=4
+        # Set-Cookie: id=X6kAwpgW29M; Expires=Wed, 7 Feb 2024 16:35:00 GMT
+        # Set-Cookie: id=X6kAwpgW29M; Max-Age=3600
+        # (cookie expires 1hr after being set
+        # Set-Cookie: id=X6kAwpgW29M; Path=/posts
+
+        # some aren't even in key-value pairs ("directives")
+        # Set-Cookie: id=X6kAwpgW29M; Secure
+        #  Set-Cookie: id=X6kAwpgW29M; HttpOnly
+
         return self
 
     def bytes(self, data : bytes) -> Response:
@@ -93,15 +109,39 @@ class Response:
                                   .encode("utf-8"))
             headers += new_header
 
-        # \r\n\r\n
+        # Set-Cookie ???
+        set_cookie_header : bytes = b"\r\n" # just to handle case where no cookies
+        if len(self.cookies) > 0:
+            set_cookie_header: bytes = b"Set-Cookie: "
+            counter: int = 0
+            for key, value in self.cookies.items():
+                counter += 1
+                if key == "HttpOnly" or key == "Secure":
+                    value = ""
+                if counter == len(self.cookies):
+                    # means at last key-value pair, so don't add ";" to end
+                    key_value_pair : bytes = (key + ": " + value + "\r\n").encode("utf-8")
+                    set_cookie_header += key_value_pair
+                else:
+                    # add space between key-value pairs
+                    key_value_pair : bytes = (key + ": " + value + "; ").encode("utf-8")
+                    set_cookie_header += key_value_pair
+
         # add body
-        return status_line + headers + b"\r\n\r\n" + self.body
+        return status_line + headers + set_cookie_header + self.body
 
 def test1():
     res = Response()
     res.text("hello")
     expected = b'HTTP/1.1 200 OK\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Length: 5\r\n\r\nhello'
     actual = res.to_data()
+    print(actual)
 
 if __name__ == '__main__':
     test1()
+
+# Week 2.1 Slide 29: server can't handle a requested path\r\n
+# b"HTTP/1.1 404 Not Found\r\n
+# Content-Type: text/plain\r\n
+# Content-Length: 36\r\n\r\n
+# The requested content does not exist"
