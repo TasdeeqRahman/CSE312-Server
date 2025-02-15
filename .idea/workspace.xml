@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5003a20-632a-46b3-8da0-d0a52804f890" name="Changes" comment="done with Response? not sure how to handle cookies">
+    <list default="true" id="b5003a20-632a-46b3-8da0-d0a52804f890" name="Changes" comment="added logic to add Set-Cookie headers to response">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/response.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/response.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/hello_path.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/hello_path.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/router.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,7 +227,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739649028189</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added logic to add Set-Cookie headers to response">
+      <option name="closed" value="true" />
+      <created>1739652211747</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1739652211747</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -254,10 +264,11 @@
     <MESSAGE value="done Request class" />
     <MESSAGE value="added test2 to Request" />
     <MESSAGE value="done with Response? not sure how to handle cookies" />
-    <option name="LAST_COMMIT_MESSAGE" value="done with Response? not sure how to handle cookies" />
+    <MESSAGE value="added logic to add Set-Cookie headers to response" />
+    <option name="LAST_COMMIT_MESSAGE" value="added logic to add Set-Cookie headers to response" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CSE312_Server$request.coverage" NAME="request Coverage Results" MODIFIED="1739648965710" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
-    <SUITE FILE_PATH="coverage/CSE312_Server$response.coverage" NAME="response Coverage Results" MODIFIED="1739649485505" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
+    <SUITE FILE_PATH="coverage/CSE312_Server$response.coverage" NAME="response Coverage Results" MODIFIED="1739652090259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
   </component>
 </project>

@@ -10,6 +10,9 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         self.router = Router()
         self.router.add_route("GET", "/hello", hello_path, True)
         # TODO: Add your routes here
+
+
+
         super().__init__(request, client_address, server)
 
     def handle(self):
