@@ -12,7 +12,6 @@ class Response:
     # rest of the lines:
         # go through every header + ": " + content for that header (don't know how to handle directives)
 
-    # this is anothe test to comit
     def __init__(self):
         pass
 
@@ -43,7 +42,6 @@ def test1():
     res.text("hello")
     expected = b'HTTP/1.1 200 OK\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Length: 5\r\n\r\nhello'
     actual = res.to_data()
-
 
 if __name__ == '__main__':
     test1()
