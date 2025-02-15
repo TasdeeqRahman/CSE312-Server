@@ -63,7 +63,7 @@ class Request:
                 # for every key-value pair, lstrip, split by "=", store in dict
                 key_value_pairs : list[str] = header_value.split(';')
                 for kv in key_value_pairs:
-                    kv.lstrip()
+                    kv = kv.lstrip()
                     key_and_value : list[str] = kv.split('=', 1)
                     self.cookies[key_and_value[0]] = key_and_value[1]
 
@@ -82,5 +82,18 @@ def test1():
     # It's recommended that you complete this test and add others, including at least one
     # test using a POST request. Also, ensure that the types of all values are correct
 
+# remove later!
+def test2():
+    request = Request(b'POST /api/chats HTTP/1.1\r\nHost: localhost:8080\r\nContent-Type: application/json\r\nCookie: id=123; theme=dark\r\n\r\n{"content":"test"}')
+    assert request.method == "POST"
+    assert request.path == "/api/chats"
+    assert request.http_version == "HTTP/1.1"
+    assert request.headers["Content-Type"] == "application/json"
+    assert request.cookies["id"] == "123"
+    assert request.cookies["theme"] == "dark"
+    assert request.body == b'{"content":"test"}'
+    print("test2 passed")
+
 if __name__ == '__main__':
     test1()
+    test2()
