@@ -1,4 +1,4 @@
-from server import MyTCPHandler
+#from server import MyTCPHandler
 from util.request import Request
 from util.response import Response
 
@@ -25,7 +25,9 @@ class Router:
         self.routes.append(newRoute)
         return
 
-    def route_request(self, request : Request, handler : MyTCPHandler) -> None:
+    def route_request(self, request : Request, handler) -> None:
+        # handler : MyTCPHandler (can't import it without "circular import"
+
         # check the method and path of the request
         # determine "added route" to be used
         # call the function associated with that route with correct arguments
