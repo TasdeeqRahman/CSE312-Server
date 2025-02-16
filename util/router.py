@@ -42,7 +42,7 @@ class Router:
                     route.action(request, handler)
                     # action won't return anything, so prevent future iterations from running
                     return
-                elif request.path.startswith(route.path):
+                elif (not route.exact_path) and request.path.startswith(route.path):
                     route.action(request, handler)
                     return
 

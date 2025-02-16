@@ -2,8 +2,10 @@ import json
 
 from pymongo.response import Response
 
-
 class Response:
+
+    # example response from Week 2.1 Lecture Slides
+    # HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 5\r\n\r\nhello
 
     def __init__(self) -> None:
         # set defaults for:
@@ -15,7 +17,8 @@ class Response:
         self.status_message : str = "OK"
 
         # default Content-Type is "text/plain; charset=utf-8"
-        self.headers : dict[str, str] = {
+        # had to rename so not confused with the function .headers()
+        self.final_headers : dict[str, str] = {
             "Content-Type" : "text/plain; charset=utf-8",
             "Content-Length" : "0",
             "X-Content-Type-Options": "nosniff" # Week 2.2 Slide 22
@@ -34,7 +37,7 @@ class Response:
     def headers(self, headers : dict[str, str]) -> Response:
         # adds/changes key-value pairs from dict as headers of response
         # handles all headers EXCEPT Set-Cookie
-        self.headers.update(headers)
+        self.final_headers.update(headers)
         return self
 
     def cookies(self, cookies : dict[str, str]) -> Response:
@@ -61,14 +64,14 @@ class Response:
     def bytes(self, data : bytes) -> Response:
         # appends input to end of body of response as bytes
         self.body += data
-        self.headers["Content-Length"] = str(len(self.body))
+        self.final_headers["Content-Length"] = str(len(self.body))
         return self
 
     def text(self, data : str) -> Response:
         # appends input to end of body of response as bytes
         # multiple calls maintains body
         self.body += data.encode("utf-8")
-        self.headers["Content-Length"] = str(len(self.body))
+        self.final_headers["Content-Length"] = str(len(self.body))
         return self
 
     def json(self, data : dict | list) -> Response:
@@ -76,8 +79,8 @@ class Response:
         # replaces old body always
         # sets Content-Type to "application/json"
         self.body = json.dumps(data).encode("utf-8")
-        self.headers["Content-Type"] = "application/json"
-        self.headers["Content-Length"] = str(len(self.body))
+        self.final_headers["Content-Type"] = "application/json"
+        self.final_headers["Content-Length"] = str(len(self.body))
         return self
 
     def to_data(self) -> bytes:
@@ -104,7 +107,7 @@ class Response:
         # rest of the headers:
         # go through every header + ": " + content for that header (don't know how to handle directives)
         headers : bytes = b""
-        for key, value in self.headers.items():
+        for key, value in self.final_headers.items():
             new_header : bytes = ((key + ": " + value + "\r\n")
                                   .encode("utf-8"))
             headers += new_header
@@ -137,8 +140,23 @@ def test1():
     actual = res.to_data()
     print(actual)
 
+def test2():
+    res = Response()
+    res.text("hello")
+    expected = b'HTTP/1.1 200 OK\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Length: 5\r\n\r\nhello'
+    actual = res.to_data()
+
+    new_header : dict[str, str] = {
+        "Content-Type" : "text/html",
+    }
+    res.headers(new_header)
+    res.text("i am changing the body !@#$%^&)(*)(*&")
+    actual = res.to_data()
+    print(actual)
+
 if __name__ == '__main__':
     test1()
+    test2()
 
 # Week 2.1 Slide 29: server can't handle a requested path\r\n
 # b"HTTP/1.1 404 Not Found\r\n

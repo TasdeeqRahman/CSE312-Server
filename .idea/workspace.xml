@@ -4,15 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5003a20-632a-46b3-8da0-d0a52804f890" name="Changes" comment="done with Router class?">
+    <list default="true" id="b5003a20-632a-46b3-8da0-d0a52804f890" name="Changes" comment="removed &quot;circular import&quot; problem and Router works for now">
+      <change afterPath="$PROJECT_DIR$/util/static_paths.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/hello_path.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/hello_path.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/response.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/response.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/util/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/router.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -43,7 +52,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.request.executor": "Run",
-    "Python.response.executor": "Run",
+    "Python.response.executor": "Debug",
+    "Python.server.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
@@ -58,7 +68,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Python.response">
+  <component name="RunManager" selected="Python.server">
     <configuration name="request" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CSE312-Server" />
       <option name="ENV_FILES" value="" />
@@ -105,8 +115,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="server" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CSE312-Server" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.server" />
         <item itemvalue="Python.response" />
         <item itemvalue="Python.request" />
       </list>
@@ -137,6 +171,7 @@
       <workItem from="1739079939697" duration="244000" />
       <workItem from="1739080205407" duration="1006000" />
       <workItem from="1739082015578" duration="473000" />
+      <workItem from="1739670574256" duration="8271000" />
     </task>
     <task id="LOCAL-00001" summary="added exmples and test push">
       <option name="closed" value="true" />
@@ -242,7 +277,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739662877056</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="removed &quot;circular import&quot; problem and Router works for now">
+      <option name="closed" value="true" />
+      <created>1739663740515</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1739663740515</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,10 +316,23 @@
     <MESSAGE value="done with Response? not sure how to handle cookies" />
     <MESSAGE value="added logic to add Set-Cookie headers to response" />
     <MESSAGE value="done with Router class?" />
-    <option name="LAST_COMMIT_MESSAGE" value="done with Router class?" />
+    <MESSAGE value="removed &quot;circular import&quot; problem and Router works for now" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed &quot;circular import&quot; problem and Router works for now" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/util/request.py</url>
+          <line>17</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CSE312_Server$server.coverage" NAME="server Coverage Results" MODIFIED="1739675055960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CSE312_Server$request.coverage" NAME="request Coverage Results" MODIFIED="1739648965710" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
-    <SUITE FILE_PATH="coverage/CSE312_Server$response.coverage" NAME="response Coverage Results" MODIFIED="1739652090259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
+    <SUITE FILE_PATH="coverage/CSE312_Server$response.coverage" NAME="response Coverage Results" MODIFIED="1739674702146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
   </component>
 </project>
