@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5003a20-632a-46b3-8da0-d0a52804f890" name="Changes" comment="removed &quot;circular import&quot; problem and Router works for now">
-      <change afterPath="$PROJECT_DIR$/util/static_paths.py" afterDir="false" />
+    <list default="true" id="b5003a20-632a-46b3-8da0-d0a52804f890" name="Changes" comment="changed names in response; can serve files to localhost now">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/response.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/response.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/static_paths.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/static_paths.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +169,7 @@
       <workItem from="1739079939697" duration="244000" />
       <workItem from="1739080205407" duration="1006000" />
       <workItem from="1739082015578" duration="473000" />
-      <workItem from="1739670574256" duration="8271000" />
+      <workItem from="1739670574256" duration="11181000" />
     </task>
     <task id="LOCAL-00001" summary="added exmples and test push">
       <option name="closed" value="true" />
@@ -285,7 +283,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739663740515</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="changed names in response; can serve files to localhost now">
+      <option name="closed" value="true" />
+      <created>1739679944367</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1739679944367</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,7 +323,8 @@
     <MESSAGE value="added logic to add Set-Cookie headers to response" />
     <MESSAGE value="done with Router class?" />
     <MESSAGE value="removed &quot;circular import&quot; problem and Router works for now" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed &quot;circular import&quot; problem and Router works for now" />
+    <MESSAGE value="changed names in response; can serve files to localhost now" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed names in response; can serve files to localhost now" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
