@@ -13,6 +13,11 @@ else:
     print("using local db")
     mongo_client = MongoClient("localhost")
 
+# cse312 database
 db = mongo_client["cse312"]
 
+# chat collection in cse312 database (empty for now)
 chat_collection = db["chat"]
+
+#######################
+

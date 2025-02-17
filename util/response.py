@@ -23,7 +23,9 @@ class Response:
             "Content-Length" : "0",
             "X-Content-Type-Options": "nosniff" # Week 2.2 Slide 22
         }
-        self.cookies : dict[str, str] = {}
+
+        # had to rename bc naming conflicts
+        self.final_cookies : dict[str, str] = {}
         self.body : bytes = b""
 
         # Set-Cookie ????
@@ -43,7 +45,7 @@ class Response:
     def cookies(self, cookies : dict[str, str]) -> Response:
         # adds key-value pairs from dict as cookies of response
         # multiple calls has to maintain previous cookies
-        self.cookies.update(cookies)
+        self.final_cookies.update(cookies)
 
         # Week 2.3 Slides
         # responses can possibly involve multiple Set-Cookie headers
@@ -78,7 +80,7 @@ class Response:
         # sets body of response to input converted to json as bytes
         # replaces old body always
         # sets Content-Type to "application/json"
-        self.body = json.dumps(data).encode("utf-8")
+        self.body : bytes = json.dumps(data).encode("utf-8")
         self.final_headers["Content-Type"] = "application/json"
         self.final_headers["Content-Length"] = str(len(self.body))
         return self
@@ -112,23 +114,34 @@ class Response:
                                   .encode("utf-8"))
             headers += new_header
 
+        # final header will always add a b"\r\n" to the end
+
+        # if no cookies, will get final b"\r\n" automatically
+        # if have cookies, need both \r\n's
         # Set-Cookie ???
         set_cookie_header : bytes = b"\r\n" # just to handle case where no cookies
-        if len(self.cookies) > 0:
+        if len(self.final_cookies) > 0:
             set_cookie_header: bytes = b"Set-Cookie: "
             counter: int = 0
-            for key, value in self.cookies.items():
+            for key, value in self.final_cookies.items():
                 counter += 1
-                if key == "HttpOnly" or key == "Secure":
-                    value = ""
-                if counter == len(self.cookies):
+
+                if counter == len(self.final_cookies):
                     # means at last key-value pair, so don't add ";" to end
-                    key_value_pair : bytes = (key + ": " + value + "\r\n").encode("utf-8")
-                    set_cookie_header += key_value_pair
+                    if key == "HttpOnly" or key == "Secure":
+                        only_key : bytes = (key + "\r\n\r\n").encode("utf-8")
+                        set_cookie_header += only_key
+                    else:
+                        key_value_pair : bytes = (key + ": " + value + "\r\n\r\n").encode("utf-8")
+                        set_cookie_header += key_value_pair
                 else:
                     # add space between key-value pairs
-                    key_value_pair : bytes = (key + ": " + value + "; ").encode("utf-8")
-                    set_cookie_header += key_value_pair
+                    if key == "HttpOnly" or key == "Secure":
+                        only_key : bytes = (key + "; ").encode("utf-8")
+                        set_cookie_header += only_key
+                    else:
+                        key_value_pair : bytes = (key + ": " + value + "; ").encode("utf-8")
+                        set_cookie_header += key_value_pair
 
         # add body
         return status_line + headers + set_cookie_header + self.body
@@ -154,9 +167,32 @@ def test2():
     actual = res.to_data()
     print(actual)
 
+def test3():
+    res = Response()
+    res.text("")
+    expected = b'HTTP/1.1 200 OK\r\nContent-Type: "text/html"\r\nContent-Length: 5\r\nSet-Cookie: HttpOnly; Secure\r\n\r\nhello'
+    actual = res.to_data()
+
+    new_header : dict[str, str] = {
+        "Content-Type" : "text/html",
+    }
+    res.headers(new_header)
+
+    new_cookies : dict[str, str] = {
+        "HttpOnly" : "1",
+        "Secure" : "1",
+    }
+    res.cookies(new_cookies)
+    res.text("")
+    actual = res.to_data()
+    print(actual)
+
+# add tests for actual key-value pairs for Cookies
+
 if __name__ == '__main__':
     test1()
     test2()
+    test3()
 
 # Week 2.1 Slide 29: server can't handle a requested path\r\n
 # b"HTTP/1.1 404 Not Found\r\n

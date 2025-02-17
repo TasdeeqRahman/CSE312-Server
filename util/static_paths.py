@@ -23,6 +23,7 @@ def serve_static_file(request : Request, handler) -> None:
     # make sure to use the right MIME type from the file extension
 
     ##################################
+    # don't know how/when to send a 404
 
     # find file to serve and MIME type
     # file_path = os.path.join(os.getcwd(), request.path[1:]) # https://docs.python.org/3/library/os.path.html#os.path.join
@@ -64,7 +65,7 @@ def serve_static_file(request : Request, handler) -> None:
 def render_template(request : Request, handler, path_to_render : str) -> None:
     # read from template_path
     # read from layout.htmp
-    # find and replace {{content}} with contents of template_path
+    # replace {{content}} with contents of template_path
     # send bytes through response
     with open(path_to_render, "rb") as fileObj:
         new_content : bytes = fileObj.read()
@@ -73,7 +74,7 @@ def render_template(request : Request, handler, path_to_render : str) -> None:
     with open(template_path, "rb") as fileObj:
         to_replace : bytes = fileObj.read()
 
-    # find and replace
+    # replace
     to_render : bytes = to_replace.replace(b"{{content}}", new_content)
 
     # send response
