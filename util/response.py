@@ -132,7 +132,7 @@ class Response:
                         only_key : bytes = (key + "\r\n\r\n").encode("utf-8")
                         set_cookie_header += only_key
                     else:
-                        key_value_pair : bytes = (key + ": " + value + "\r\n\r\n").encode("utf-8")
+                        key_value_pair : bytes = (key + "=" + value + "\r\n\r\n").encode("utf-8")
                         set_cookie_header += key_value_pair
                 else:
                     # add space between key-value pairs
@@ -140,11 +140,12 @@ class Response:
                         only_key : bytes = (key + "; ").encode("utf-8")
                         set_cookie_header += only_key
                     else:
-                        key_value_pair : bytes = (key + ": " + value + "; ").encode("utf-8")
+                        key_value_pair : bytes = (key + "=" + value + "; ").encode("utf-8")
                         set_cookie_header += key_value_pair
 
         # add body
-        return status_line + headers + set_cookie_header + self.body
+        t : bytes = status_line + headers + set_cookie_header + self.body
+        return t
 
 def test1():
     res = Response()
@@ -187,12 +188,34 @@ def test3():
     actual = res.to_data()
     print(actual)
 
+def test4():
+    res = Response()
+    res.text("message sent")
+    expected = b'HTTP/1.1 200 OK\r\nContent-Type: "text/html"\r\nContent-Length: 12\r\nSet-Cookie: session=""; Max-Age="3600\r\n\r\nmessage sent'
+    actual = res.to_data()
+
+    new_header : dict[str, str] = {
+        "Content-Type" : "text/html",
+    }
+    res.headers(new_header)
+
+    new_cookies : dict[str, str] = {
+        "session": "f0c82cbf-737c-4d9d-879a-3a4e3762765d",
+        "HttpOnly" : "1",
+        "Max-Age": "3600",
+    }
+    res.cookies(new_cookies)
+    res.text("")
+    actual = res.to_data()
+    print(actual)
+
 # add tests for actual key-value pairs for Cookies
 
 if __name__ == '__main__':
     test1()
     test2()
     test3()
+    test4()
 
 # Week 2.1 Slide 29: server can't handle a requested path\r\n
 # b"HTTP/1.1 404 Not Found\r\n

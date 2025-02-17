@@ -54,13 +54,10 @@ def create_chat_message(request : Request, handler) -> None:
     chat_collection.insert_one(new_message.get_message_document())
 
     # send response
-    response = Response()
+    response : Response = Response()
     response.text("message sent")
-    response.cookies({
-        "session" : user_id,
-        "Max-Age" : "3600",
-    })
-    handler.request.send_response(response.to_data())
+    response.cookies({"session": user_id, "Max-Age": "3600"})
+    handler.request.sendall(response.to_data())
     return
 
 def retrieve_all_messages(request : Request, handler) -> None:
@@ -72,16 +69,14 @@ def retrieve_all_messages(request : Request, handler) -> None:
     list_of_messages = []
     for message in chat_collection.find():
         list_of_messages.append({
-            "author" : message["author"],
-            "id" : message["id"],
-            "content" : message["content"],
-            "updated" : message["updated"],
+            "author": message["author"],
+            "id": message["id"],
+            "content": message["content"],
+            "updated": message["updated"],
         })
 
-    response = Response()
-    response.json({
-        "message": list_of_messages
-    })
+    response : Response = Response()
+    response.json({"messages": list_of_messages})
     handler.request.sendall(response.to_data())
     return
 
@@ -95,7 +90,7 @@ def update_chat_message(request : Request, handler) -> None:
     user_id: str = request.cookies.get("session", "")
     if user_id == "":
         # user can't have permission to change
-        no_permission_response = (Response()
+        no_permission_response : Response = (Response()
                                   .set_status(403, "Forbidden")
                                   .text("No session cookie found"))
         handler.request.sendall(no_permission_response.to_data())
@@ -108,7 +103,7 @@ def update_chat_message(request : Request, handler) -> None:
 
     if chat_message_to_change["author"] != user_id:
         # no permission to change because session id's don't match
-        no_permission_response = (Response()
+        no_permission_response : Response = (Response()
                                   .set_status(403, "Forbidden")
                                   .text("Session cookie ID does not match owner"))
         handler.request.sendall(no_permission_response.to_data())
@@ -123,11 +118,11 @@ def update_chat_message(request : Request, handler) -> None:
                                                          "updated": True}})
 
     # respond
-    response = (Response()
+    response : Response = (Response()
         .text("message updated")
         .cookies({
-            "session" : user_id,
-            "Max-Age" : "3600"
+            "session": user_id,
+            "Max-Age": "3600"
         }))
     handler.request.sendall(response.to_data())
     return
@@ -143,7 +138,7 @@ def delete_chat_message(request : Request, handler) -> None:
     user_id: str = request.cookies.get("session", "")
     if user_id == "":
         # user can't have permission to delete
-        no_permission_response = (Response()
+        no_permission_response : Response = (Response()
                                   .set_status(403, "Forbidden")
                                   .text("No session cookie found"))
         handler.request.sendall(no_permission_response.to_data())
@@ -156,7 +151,7 @@ def delete_chat_message(request : Request, handler) -> None:
 
     if chat_message_to_delete["author"] != user_id:
         # no permission to delete because session id's don't match
-        no_permission_response = (Response()
+        no_permission_response : Response = (Response()
                                   .set_status(403, "Forbidden")
                                   .text("Session cookie ID does not match owner"))
         handler.request.sendall(no_permission_response.to_data())
@@ -165,7 +160,7 @@ def delete_chat_message(request : Request, handler) -> None:
     chat_collection.delete_one({"id": message_id})
 
     # respond
-    response = (Response()
+    response : Response = (Response()
         .text("message deleted")
         .cookies({
             "session": user_id,
