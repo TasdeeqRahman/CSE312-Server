@@ -82,7 +82,6 @@ def test1():
     # It's recommended that you complete this test and add others, including at least one
     # test using a POST request. Also, ensure that the types of all values are correct
 
-# remove later!
 def test2():
     request = Request(b'POST /api/chats HTTP/1.1\r\nHost: localhost:8080\r\nContent-Type: application/json\r\nCookie: id=123; theme=dark\r\n\r\n{"content":"test"}')
     assert request.method == "POST"

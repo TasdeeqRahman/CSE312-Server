@@ -1,5 +1,4 @@
 # from server import MyTCPHandler
-import os
 
 from util.request import Request
 from util.response import Response
@@ -25,21 +24,11 @@ def serve_static_file(request : Request, handler) -> None:
     ##################################
     # don't know how/when to send a 404
 
-    # find file to serve and MIME type
-    # file_path = os.path.join(os.getcwd(), request.path[1:]) # https://docs.python.org/3/library/os.path.html#os.path.join
     file_path = request.path[1:] # just get rid of the leading "/"
-
-    # if not os.path.exists(file_path): # https://docs.python.org/3/library/os.path.html#os.path.exists
-    #     # respond with 404
-    #     file_not_found = Response()
-    #     file_not_found.set_status(404, "File not found")
-    #     file_not_found.text("File not found")
-    #     handler.request.send_response(file_not_found.to_data())
 
     # chance for error if path is not to file but still valid
 
     # determine MIME type
-    # extension : str = os.path.splitext(file_path)[1].lstrip(".") # https://docs.python.org/3/library/stdtypes.html#bytes.lstrip
     extension : str = request.path.rsplit('.', 1)[-1]  # https://docs.python.org/3/library/stdtypes.html#str.rsplit
 
     # unavoidable KeyError if path does not lead to file with extension

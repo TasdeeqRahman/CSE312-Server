@@ -106,6 +106,9 @@ class Response:
                                 "\r\n")
                                .encode("utf-8"))
 
+        # make sure Content-Length is correct?
+        self.final_headers["Content-Length"] = str(len(self.body))
+
         # rest of the headers:
         # go through every header + ": " + content for that header (don't know how to handle directives)
         headers : bytes = b""
@@ -209,6 +212,42 @@ def test4():
     actual = res.to_data()
     print(actual)
 
+def test5():
+    res = Response()
+    res.text("")
+    # expected = b'HTTP/1.1 200 OK\r\nContent-Type: "text/html"\r\nContent-Length: 12\r\nSet-Cookie: session=""; Max-Age="3600\r\n\r\nmessage sent'
+    actual = res.to_data()
+
+    new_headers : dict = {
+        "Content-Type": "text/html; charset=utf-8",
+        "Content-Length": "55743",
+        "Connection": "keep-alive",
+        "Cache-Control": "s-maxage=300, public, max-age=0",
+        "Content-Language": "en-US",
+        "Date": "Thu, 06 Dec 2018 17:37:18 GMT",
+        "ETag": "2e77ad1dc6ab0b53a2996dfd4653c1c3",
+        "Server": "meinheld/0.6.1",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block",
+        "Vary": "Accept-Encoding,Cookie",
+        "Age": "7"
+    }
+    res.headers(new_headers)
+
+    new_cookies : dict[str, str] = {
+        "session": "f0c82cbf-737c-4d9d-879a-3a4e3762765d",
+        "HttpOnly" : "1",
+        "Max-Age": "3600",
+        "id": "a3fWa",
+        "Expires": "Thu, 31 Oct 2021 07:28:00 GMT"
+    }
+    res.cookies(new_cookies)
+    res.text("")
+    actual = res.to_data()
+    print(actual)
+
 # add tests for actual key-value pairs for Cookies
 
 if __name__ == '__main__':
@@ -216,6 +255,7 @@ if __name__ == '__main__':
     test2()
     test3()
     test4()
+    test5()
 
 # Week 2.1 Slide 29: server can't handle a requested path\r\n
 # b"HTTP/1.1 404 Not Found\r\n
