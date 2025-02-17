@@ -90,10 +90,11 @@ def update_chat_message(request : Request, handler) -> None:
     user_id: str = request.cookies.get("session", "")
     if user_id == "":
         # user can't have permission to change
-        no_permission_response : Response = (Response()
+        no_permission_response = (Response()
                                   .set_status(403, "Forbidden")
                                   .text("No session cookie found"))
         handler.request.sendall(no_permission_response.to_data())
+        return
 
     # retrieve {id} in path
     message_id : str = request.path.rsplit("/", 1)[-1]
@@ -103,14 +104,15 @@ def update_chat_message(request : Request, handler) -> None:
 
     if chat_message_to_change["author"] != user_id:
         # no permission to change because session id's don't match
-        no_permission_response : Response = (Response()
+        no_permission_response = (Response()
                                   .set_status(403, "Forbidden")
                                   .text("Session cookie ID does not match owner"))
         handler.request.sendall(no_permission_response.to_data())
+        return
 
     # decode request body, and change contents of chat message
-    d: dict = json.loads(request.body)
-    message_content: str = html.escape(d["content"])
+    d : dict = json.loads(request.body)
+    message_content : str = html.escape(d["content"])
 
     # update the chat message
     chat_collection.update_one({"id": message_id}, {"$set":
@@ -138,10 +140,11 @@ def delete_chat_message(request : Request, handler) -> None:
     user_id: str = request.cookies.get("session", "")
     if user_id == "":
         # user can't have permission to delete
-        no_permission_response : Response = (Response()
+        no_permission_response = (Response()
                                   .set_status(403, "Forbidden")
                                   .text("No session cookie found"))
         handler.request.sendall(no_permission_response.to_data())
+        return
 
     # retrieve {id} in path
     message_id: str = request.path.rsplit("/", 1)[-1]
@@ -151,16 +154,17 @@ def delete_chat_message(request : Request, handler) -> None:
 
     if chat_message_to_delete["author"] != user_id:
         # no permission to delete because session id's don't match
-        no_permission_response : Response = (Response()
+        no_permission_response = (Response()
                                   .set_status(403, "Forbidden")
                                   .text("Session cookie ID does not match owner"))
         handler.request.sendall(no_permission_response.to_data())
+        return
 
     # delete the message
     chat_collection.delete_one({"id": message_id})
 
     # respond
-    response : Response = (Response()
+    response = (Response()
         .text("message deleted")
         .cookies({
             "session": user_id,
@@ -168,6 +172,3 @@ def delete_chat_message(request : Request, handler) -> None:
         }))
     handler.request.sendall(response.to_data())
     return
-
-
-
