@@ -23,7 +23,7 @@ class Message:
 
     # *** output of this is inserted into chat_collection (database) ***
     def get_message_document(self) -> dict[str, str]:
-        ret : dict[str, str] = {
+        ret : dict = {
             "author" : self.author,
             "id" : self.identify,
             "content" : self.content,
@@ -68,7 +68,8 @@ def create_chat_message(request : Request, handler) -> None:
     # if one record from database with this user_id (author) has a nickname, add nickname field
 
     sample_previous_message_from_user = chat_collection.find_one({"author": user_id})
-    if "nickname" in sample_previous_message_from_user:
+    if (sample_previous_message_from_user and     # just need some way to tell if find_one found something or not
+            "nickname" in sample_previous_message_from_user):
         potential_message_document.update({"nickname": sample_previous_message_from_user["nickname"]})
 
     chat_collection.insert_one(potential_message_document)
