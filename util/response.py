@@ -119,35 +119,17 @@ class Response:
 
         # final header will always add a b"\r\n" to the end
 
-        # if no cookies, will get final b"\r\n" automatically
-        # if have cookies, need both \r\n's
-        # Set-Cookie ???
-        set_cookie_header : bytes = b"\r\n" # just to handle case where no cookies
+        # add "Set-Cookie:'s" to the end
         if len(self.final_cookies) > 0:
-            set_cookie_header: bytes = b"Set-Cookie: "
-            counter: int = 0
+            set_cookie: bytes = b"Set-Cookie: "
             for key, value in self.final_cookies.items():
-                counter += 1
-
-                if counter == len(self.final_cookies):
-                    # means at last key-value pair, so don't add ";" to end
-                    if key == "HttpOnly" or key == "Secure":
-                        only_key : bytes = (key + "\r\n\r\n").encode("utf-8")
-                        set_cookie_header += only_key
-                    else:
-                        key_value_pair : bytes = (key + "=" + value + "\r\n\r\n").encode("utf-8")
-                        set_cookie_header += key_value_pair
+                if key == "HttpOnly" or key == "Secure":
+                    headers += b"Set-Cookie: " + (key + "\r\n").encode("utf-8")
                 else:
-                    # add space between key-value pairs
-                    if key == "HttpOnly" or key == "Secure":
-                        only_key : bytes = (key + "; ").encode("utf-8")
-                        set_cookie_header += only_key
-                    else:
-                        key_value_pair : bytes = (key + "=" + value + "; ").encode("utf-8")
-                        set_cookie_header += key_value_pair
+                    headers += b"Set-Cookie: " + (key + "=" + value + "\r\n").encode("utf-8")
 
         # add body
-        t : bytes = status_line + headers + set_cookie_header + self.body
+        t : bytes = status_line + headers + b"\r\n" + self.body
         return t
 
 def test1():

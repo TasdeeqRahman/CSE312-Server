@@ -7,18 +7,28 @@ from util.response import Response
 from util.database import chat_collection
 
 class Message:
-    def __init__(self, author : str, ident : str, content : str, updated : bool = False) -> None:
+    def __init__(self,
+                 author : str,
+                 ident : str,
+                 content : str,
+                 updated : bool = False) -> None:
         self.author : str = author      # maps to session id for now
         self.identify : str = ident     # maps to message id
         self.content : str = content    # maps to message content
-        self.updated : bool = updated   # w/e
+        self.updated : bool = updated   # True if it was updated, False otherwise
 
+        # dict that maps emoji "char strings" to list of user id's who used that emoji
+        # can't be initialized
+        self.reactions : dict[str, list[str]] = {}       # added field from AO #1
+
+    # *** output of this is inserted into chat_collection (database) ***
     def get_message_document(self) -> dict[str, str]:
         ret : dict[str, str] = {
             "author" : self.author,
             "id" : self.identify,
             "content" : self.content,
             "updated" : self.updated,
+            "reactions" : self.reactions
         }
         return ret
 
@@ -47,7 +57,7 @@ def create_chat_message(request : Request, handler) -> None:
 
     # store message id and author into database
     new_message : Message = Message(
-        user_id,
+        user_id,            # user_id (str of uuid.uuid4()) is associated with the author
         message_id,
         message_content
     )
@@ -62,18 +72,32 @@ def create_chat_message(request : Request, handler) -> None:
 
 def retrieve_all_messages(request : Request, handler) -> None:
     # from a GET request
-    # Response body is JSON : {"message": [{"author": string, "id": string, "content": string, "updated": boolean}, ...]}
+    # Response body is JSON : {"messages": [{"author": string, "id": string, "content": string, "updated": boolean}, ...]}
     # "updated" represents if the message has even been updated
 
-    # ret is a json dict with only one key-value pair, value being a list
+    # response body should be a json dict with only one key-value pair,
+    # value being a list of dict's (one dict per message)
+
+    # AO 1: each message has another field for "reactions" : dict[str, list[str]]
+    # example: (emoji : list of user id's)
+    # "reactions": {"👻": ["63fc690d-ea3a-4349-ba51-0c645af40453"],
+    # "🫠": ["eda92e0a-eb7a-430b-a938-916d2102b480", "63fc690d-ea3a-4349-ba51-0c645af40453"]}
+
+    # every message in the collection is just a dict with keys and values
     list_of_messages = []
     for message in chat_collection.find():
-        list_of_messages.append({
+        # AO 1 changes
+        # message in the database can now have a reaction field for emojis
+
+        message_from_document : dict = {
             "author": message["author"],
             "id": message["id"],
             "content": message["content"],
             "updated": message["updated"],
-        })
+            "reactions" : message["reactions"]
+        }
+
+        list_of_messages.append(message_from_document)
 
     response : Response = Response()
     response.json({"messages": list_of_messages})
@@ -112,7 +136,7 @@ def update_chat_message(request : Request, handler) -> None:
 
     # decode request body, and change contents of chat message
     d : dict = json.loads(request.body)
-    message_content : str = html.escape(d["content"])
+    message_content : str = html.escape(d["content"]) # make sure new content isn't HTML
 
     # update the chat message
     chat_collection.update_one({"id": message_id}, {"$set":

@@ -1,10 +1,11 @@
 import socketserver
+
 from util.request import Request
 from util.router import Router
 from util.hello_path import hello_path
 from util.static_paths import serve_static_file, handle_index, handle_chat
 from util.for_chat import create_chat_message, retrieve_all_messages, update_chat_message, delete_chat_message
-
+from util.emojis_and_nicknames import add_emoji, remove_emoji
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
 
@@ -13,14 +14,20 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         self.router.add_route("GET", "/hello", hello_path, True)
         # TODO: Add your routes here
 
+        # HW1 LO's
         self.router.add_route("GET", "/public", serve_static_file, False)
         self.router.add_route("GET", "/", handle_index, True)
         self.router.add_route("GET", "/chat", handle_chat, True)
 
+        # all the request.path's will begin with a "/"
         self.router.add_route("POST", "/api/chats", create_chat_message, True)
         self.router.add_route("GET", "/api/chats", retrieve_all_messages, True)
         self.router.add_route("PATCH", "/api/chats", update_chat_message, False)
         self.router.add_route("DELETE", "/api/chats", delete_chat_message, False)
+
+        # HW1 AO's
+        self.router.add_route("PATCH", "/api/reaction", add_emoji, False)
+        self.router.add_route("DELETE", "/api/reaction", remove_emoji, False)
 
         super().__init__(request, client_address, server)
 
