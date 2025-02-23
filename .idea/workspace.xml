@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5003a20-632a-46b3-8da0-d0a52804f890" name="Changes" comment="changed retrieving chat messages to include emojis; added endpoint for adding reactions">
+    <list default="true" id="b5003a20-632a-46b3-8da0-d0a52804f890" name="Changes" comment="added endpoint for removing emoji">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/util/emojis_and_nicknames.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/emojis_and_nicknames.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/for_chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/for_chat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/request.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/request.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,7 +175,7 @@
       <workItem from="1739670574256" duration="12647000" />
       <workItem from="1739733771368" duration="30381000" />
       <workItem from="1740084353345" duration="7256000" />
-      <workItem from="1740288295874" duration="6865000" />
+      <workItem from="1740288295874" duration="11219000" />
     </task>
     <task id="LOCAL-00001" summary="added exmples and test push">
       <option name="closed" value="true" />
@@ -342,7 +345,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740293519869</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="added endpoint for removing emoji">
+      <option name="closed" value="true" />
+      <created>1740295451434</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1740295451434</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -381,14 +392,15 @@
     <MESSAGE value="fixed mistake where kept going after sending forbidden response" />
     <MESSAGE value="w/e" />
     <MESSAGE value="changed retrieving chat messages to include emojis; added endpoint for adding reactions" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed retrieving chat messages to include emojis; added endpoint for adding reactions" />
+    <MESSAGE value="added endpoint for removing emoji" />
+    <option name="LAST_COMMIT_MESSAGE" value="added endpoint for removing emoji" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/server.py</url>
-          <line>41</line>
+          <line>43</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>

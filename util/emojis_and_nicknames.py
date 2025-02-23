@@ -119,4 +119,31 @@ def remove_emoji(request : Request, handler) -> None:
     handler.request.sendall(res.to_data())
     return
 
+def change_nickname(request : Request, handler) -> None:
+    # request content is JSON in form: {"nickname": "[new nickname]"}
+    # new  nicknames will add a "nickname" field for the user and all their messages
+
+    # get new nickname from request body
+    d : dict[str, str] = json.loads(request.body)
+    new_nickname : str = d.get('nickname')
+
+    # get user_id of user who made nickname change request
+    user_id : str = request.cookies.get("session", "")
+    if user_id == "":
+        # this is user's first interaction with chat
+        user_id = str(uuid.uuid4())
+
+    # make changes to the chat collection
+    # does this work if "nickname" isn't an existing field?
+    chat_collection.update_many({"id": user_id}, {"$set": {
+        "nickname": new_nickname
+    }})
+
+    # send response
+    res = (Response()
+           .text("nickname changed and database updated")
+           .cookies({"session": user_id, "Max-Age": "3600"}))
+    handler.request.sendall(res.to_data())
+    return
+
 

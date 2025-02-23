@@ -1,6 +1,6 @@
 class Request:
 
-    def __init__(self, request: bytes) -> None:
+    def __init__(self, request : bytes) -> None:
         # TODO: parse the bytes of the request and populate the following instance variables
 
         #  example request from Week 3 Recitation slides:

@@ -5,7 +5,8 @@ from util.router import Router
 from util.hello_path import hello_path
 from util.static_paths import serve_static_file, handle_index, handle_chat
 from util.for_chat import create_chat_message, retrieve_all_messages, update_chat_message, delete_chat_message
-from util.emojis_and_nicknames import add_emoji, remove_emoji
+from util.emojis_and_nicknames import add_emoji, remove_emoji, change_nickname
+
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
 
@@ -28,6 +29,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         # HW1 AO's
         self.router.add_route("PATCH", "/api/reaction", add_emoji, False)
         self.router.add_route("DELETE", "/api/reaction", remove_emoji, False)
+        self.router.add_route("PATCH", "/api/nickname", change_nickname, True)
 
         super().__init__(request, client_address, server)
 

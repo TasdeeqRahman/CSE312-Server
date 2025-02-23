@@ -97,6 +97,10 @@ def retrieve_all_messages(request : Request, handler) -> None:
             "reactions" : message["reactions"]
         }
 
+        # AO 2: message may or may not have a nickname field (string)
+        if "nickname" in message:
+            message_from_document.update({"nickname": message["nickname"]})
+
         list_of_messages.append(message_from_document)
 
     response : Response = Response()
@@ -141,7 +145,8 @@ def update_chat_message(request : Request, handler) -> None:
     # update the chat message
     chat_collection.update_one({"id": message_id}, {"$set":
                                                         {"content": message_content,
-                                                         "updated": True}})
+                                                         "updated": True}
+                                                    })
 
     # respond
     response : Response = (Response()
