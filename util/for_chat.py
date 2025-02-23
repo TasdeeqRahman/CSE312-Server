@@ -61,7 +61,17 @@ def create_chat_message(request : Request, handler) -> None:
         message_id,
         message_content
     )
-    chat_collection.insert_one(new_message.get_message_document())
+
+    potential_message_document : dict = new_message.get_message_document()
+
+    # AO 2: this user_id might have an associated nickname to it
+    # if one record from database with this user_id (author) has a nickname, add nickname field
+
+    sample_previous_message_from_user = chat_collection.find_one({"author": user_id})
+    if "nickname" in sample_previous_message_from_user:
+        potential_message_document.update({"nickname": sample_previous_message_from_user["nickname"]})
+
+    chat_collection.insert_one(potential_message_document)
 
     # send response
     response : Response = Response()

@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5003a20-632a-46b3-8da0-d0a52804f890" name="Changes" comment="added endpoint for removing emoji">
+    <list default="true" id="b5003a20-632a-46b3-8da0-d0a52804f890" name="Changes" comment="added endpoint for adding/changing nicknames">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/util/emojis_and_nicknames.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/emojis_and_nicknames.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/util/for_chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/for_chat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/request.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/request.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +67,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.response">
+  <component name="RunManager" selected="Python.server">
     <configuration name="request" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CSE312-Server" />
       <option name="ENV_FILES" value="" />
@@ -141,8 +139,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.response" />
         <item itemvalue="Python.server" />
+        <item itemvalue="Python.response" />
         <item itemvalue="Python.request" />
       </list>
     </recent_temporary>
@@ -175,7 +173,8 @@
       <workItem from="1739670574256" duration="12647000" />
       <workItem from="1739733771368" duration="30381000" />
       <workItem from="1740084353345" duration="7256000" />
-      <workItem from="1740288295874" duration="11219000" />
+      <workItem from="1740288295874" duration="11561000" />
+      <workItem from="1740346543541" duration="2490000" />
     </task>
     <task id="LOCAL-00001" summary="added exmples and test push">
       <option name="closed" value="true" />
@@ -353,7 +352,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740295451434</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="added endpoint for adding/changing nicknames">
+      <option name="closed" value="true" />
+      <created>1740299832304</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1740299832304</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,18 +400,10 @@
     <MESSAGE value="w/e" />
     <MESSAGE value="changed retrieving chat messages to include emojis; added endpoint for adding reactions" />
     <MESSAGE value="added endpoint for removing emoji" />
-    <option name="LAST_COMMIT_MESSAGE" value="added endpoint for removing emoji" />
+    <MESSAGE value="added endpoint for adding/changing nicknames" />
+    <option name="LAST_COMMIT_MESSAGE" value="added endpoint for adding/changing nicknames" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/server.py</url>
-          <line>43</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="self.status_code" />
@@ -414,7 +413,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CSE312_Server$server.coverage" NAME="server Coverage Results" MODIFIED="1739765050512" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CSE312_Server$server.coverage" NAME="server Coverage Results" MODIFIED="1740348799790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CSE312_Server$request.coverage" NAME="request Coverage Results" MODIFIED="1739758239578" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
     <SUITE FILE_PATH="coverage/CSE312_Server$response.coverage" NAME="response Coverage Results" MODIFIED="1739768981642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
   </component>

@@ -135,7 +135,7 @@ def change_nickname(request : Request, handler) -> None:
 
     # make changes to the chat collection
     # does this work if "nickname" isn't an existing field?
-    chat_collection.update_many({"id": user_id}, {"$set": {
+    chat_collection.update_many({"author": user_id}, {"$set": {
         "nickname": new_nickname
     }})
 
